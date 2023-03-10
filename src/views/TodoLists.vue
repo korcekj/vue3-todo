@@ -11,7 +11,7 @@ import TodoList from '@/components/TodoList.vue';
 import NewTodoList from '@/components/NewTodoList.vue';
 import ListTransition from '@/components/ListTransition.vue';
 
-const { data, isLoading: isDataLoading } = useTodoListsQuery();
+const { data, isLoading: isDataLoading, isError } = useTodoListsQuery();
 const { mutateAsync: addTodoList } = useAddTodoListMutation();
 const { mutateAsync: deleteTodoList } = useDeleteTodoListMutation();
 
@@ -31,7 +31,12 @@ const onDelete = async (id: string, done: () => void) => {
     <NewTodoList @create="onAdd" />
   </v-container>
   <v-container>
-    <v-row justify="center" no-gutters v-if="isDataLoading">
+    <v-row no-gutters v-if="isError">
+      <v-alert color="error" border="start">
+        Error fetching todo lists!
+      </v-alert>
+    </v-row>
+    <v-row justify="center" no-gutters v-else-if="isDataLoading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-row>
     <v-row dense v-else-if="data?.length">
