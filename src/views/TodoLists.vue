@@ -16,20 +16,21 @@ const title = ref('');
 
 const { rules } = useRules();
 const { data, isLoading: isDataLoading } = useTodoListsQuery();
-const { mutate: addTodoList, isLoading: isFormLoading } =
+const { mutateAsync: addTodoList, isLoading: isFormLoading } =
   useAddTodoListMutation();
-const { mutate: deleteTodoList } = useDeleteTodoListMutation();
+const { mutateAsync: deleteTodoList } = useDeleteTodoListMutation();
 
 const onAdd = async (e: SubmitEventPromise) => {
   const { valid } = await e;
   if (!valid) return;
 
-  addTodoList({ title: title.value });
+  await addTodoList({ title: title.value });
   title.value = '';
 };
 
-const onDelete = (id: string) => {
-  deleteTodoList({ id });
+const onDelete = async (id: string, done: () => void) => {
+  await deleteTodoList({ id });
+  done();
 };
 </script>
 

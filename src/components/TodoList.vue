@@ -16,7 +16,9 @@ const notCompletedCount = computed(() =>
 
 const onDelete = () => {
   isLoading.value = true;
-  emit('delete', list?.id);
+  emit('delete', list?.id, () => {
+    isLoading.value = false;
+  });
 };
 </script>
 
