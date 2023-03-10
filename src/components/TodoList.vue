@@ -4,24 +4,24 @@ import type { ITodoList } from '@/utils/zod';
 import { ref, computed } from 'vue';
 import { toast } from 'vue3-toastify';
 
-const { list } = defineProps<{ list: ITodoList }>();
+const props = defineProps<{ list: ITodoList }>();
 
 const emit = defineEmits(['delete']);
 
 const isLoading = ref(false);
 
 const notCompletedCount = computed(() =>
-  list?.todos.reduce((acc, todo) => acc + (todo.completed ? 0 : 1), 0)
+  props.list?.todos.reduce((acc, todo) => acc + (todo.completed ? 0 : 1), 0)
 );
 
 const onDelete = () => {
-  if (list.todos.length > 0) {
+  if (props.list.todos.length > 0) {
     toast.error('Cannot delete a list with todos');
     return;
   }
 
   isLoading.value = true;
-  emit('delete', list?.id, () => {
+  emit('delete', props.list?.id, () => {
     isLoading.value = false;
   });
 };
