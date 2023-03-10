@@ -10,6 +10,7 @@ import {
 import { useRules } from '@/utils/rules';
 
 import TodoList from '@/components/TodoList.vue';
+import ListTransition from '@/components/ListTransition.vue';
 
 const title = ref('');
 
@@ -52,11 +53,11 @@ const onDelete = (id: string) => {
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-row>
       <v-row dense v-else-if="data">
-        <v-slide-y-transition group>
+        <ListTransition>
           <v-col cols="12" sm="4" md="3" v-for="list in data" :key="list.id">
             <TodoList :list="list" @delete="onDelete" />
           </v-col>
-        </v-slide-y-transition>
+        </ListTransition>
       </v-row>
     </div>
   </v-container>
