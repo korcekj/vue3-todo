@@ -28,6 +28,7 @@ const onDelete = () => {
     max-width="344"
     variant="outlined"
     :loading="isLoading"
+    :disabled="isLoading"
   >
     <v-card-item>
       <div>
