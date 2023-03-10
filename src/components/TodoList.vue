@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
 import type { ITodoList } from '@/utils/zod';
 
 import { ref, computed } from 'vue';
