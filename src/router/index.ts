@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Home from '@/views/Home.vue';
+import TodoLists from '@/views/TodoLists.vue';
+import Todos from '@/views/Todos.vue';
 import NotFound from '@/views/NotFound.vue';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: Home },
+    { path: '/', component: TodoLists },
+    { path: '/todo-lists/:id', component: Todos },
     { path: '/:pathMatch(.*)', component: NotFound },
   ],
 });
