@@ -18,7 +18,7 @@ const remainingDays = computed(() => {
 const onCompleteChange = () => {
   isLoading.value = true;
   isCompleted.value = !isCompleted.value;
-  emit('update', { completed: isCompleted.value }, () => {
+  emit('update', props.item.id, { completed: isCompleted.value }, () => {
     isLoading.value = false;
   });
 };

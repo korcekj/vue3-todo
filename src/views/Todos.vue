@@ -10,6 +10,7 @@ import {
   useDeleteTodoMutation,
   useUpdateTodoMutation,
 } from '@/utils/queries';
+import { toast } from 'vue3-toastify';
 
 import Todo from '@/components/Todo.vue';
 import NewTodo from '@/components/NewTodo.vue';
@@ -42,21 +43,43 @@ const onFilter = (todos: Ref<ITodo[]>) => {
 };
 
 const onCreate = async (todo: Omit<ITodo, 'id'>, done: () => void) => {
-  await addTodo(todo);
-  done();
+  try {
+    await addTodo(todo);
+    toast.success('Todo added successfully');
+  } catch {
+    toast.error('Error adding todo');
+  } finally {
+    done();
+  }
 };
 
-const onUpdate = async (todo: Partial<Omit<ITodo, 'id'>>, done: () => void) => {
-  await updateTodo({
-    id: route.params.id as string,
-    todo,
-  });
-  done();
+const onUpdate = async (
+  id: string,
+  todo: Partial<Omit<ITodo, 'id'>>,
+  done: () => void
+) => {
+  try {
+    await updateTodo({
+      id,
+      todo,
+    });
+    toast.success('Todo updated successfully');
+  } catch {
+    toast.error('Error updating todo');
+  } finally {
+    done();
+  }
 };
 
 const onDelete = async (id: string, done: () => void) => {
-  await deleteTodo({ id });
-  done();
+  try {
+    await deleteTodo({ id });
+    toast.success('Todo deleted successfully');
+  } catch {
+    toast.error('Error deleting todo');
+  } finally {
+    done();
+  }
 };
 </script>
 

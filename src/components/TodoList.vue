@@ -3,6 +3,7 @@ import type { PropType } from 'vue';
 import type { ITodoList } from '@/utils/zod';
 
 import { ref, computed } from 'vue';
+import { toast } from 'vue3-toastify';
 
 const { list } = defineProps<{ list: ITodoList }>();
 
@@ -15,7 +16,10 @@ const notCompletedCount = computed(() =>
 );
 
 const onDelete = () => {
-  if (list.todos.length > 0) return;
+  if (list.todos.length > 0) {
+    toast.error('Cannot delete a list with todos');
+    return;
+  }
 
   isLoading.value = true;
   emit('delete', list?.id, () => {

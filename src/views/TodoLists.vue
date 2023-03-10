@@ -6,6 +6,7 @@ import {
   useAddTodoListMutation,
   useDeleteTodoListMutation,
 } from '@/utils/queries';
+import { toast } from 'vue3-toastify';
 
 import TodoList from '@/components/TodoList.vue';
 import NewTodoList from '@/components/NewTodoList.vue';
@@ -16,12 +17,25 @@ const { mutateAsync: addTodoList } = useAddTodoListMutation();
 const { mutateAsync: deleteTodoList } = useDeleteTodoListMutation();
 
 const onAdd = async (list: Pick<ITodoList, 'title'>, done: () => void) => {
-  await addTodoList(list);
-  done();
+  try {
+    await addTodoList(list);
+    toast.success('Todo list added successfully');
+  } catch {
+    toast.error('Error adding todo list');
+  } finally {
+    done();
+  }
 };
 
 const onDelete = async (id: string, done: () => void) => {
-  await deleteTodoList({ id });
+  try {
+    await deleteTodoList({ id });
+    toast.success('Todo list deleted successfully');
+  } catch {
+    toast.error('Error deleting todo list');
+  } finally {
+    done();
+  }
   done();
 };
 </script>
