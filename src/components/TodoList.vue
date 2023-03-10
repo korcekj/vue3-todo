@@ -4,9 +4,7 @@ import type { ITodoList } from '@/utils/zod';
 
 import { ref, computed } from 'vue';
 
-const { list } = defineProps({
-  list: Object as PropType<ITodoList>,
-});
+const { list } = defineProps<{ list: ITodoList }>();
 
 const emit = defineEmits(['delete']);
 
