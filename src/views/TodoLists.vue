@@ -27,22 +27,22 @@ const onDelete = async (id: string, done: () => void) => {
 </script>
 
 <template>
-  <v-container class="my-8">
+  <v-container class="mt-8">
     <NewTodoList @create="onAdd" />
-    <div class="py-4">
-      <v-row justify="center" dense v-if="isDataLoading">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-row>
-      <v-row dense v-else-if="data?.length">
-        <ListTransition>
-          <v-col cols="12" sm="4" md="3" v-for="list in data" :key="list.id">
-            <TodoList :list="list" @delete="onDelete" />
-          </v-col>
-        </ListTransition>
-      </v-row>
-      <v-row no-gutters v-else>
-        <v-alert border="start"> No todo lists found. Add a new one! </v-alert>
-      </v-row>
-    </div>
+  </v-container>
+  <v-container>
+    <v-row justify="center" no-gutters v-if="isDataLoading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-row>
+    <v-row dense v-else-if="data?.length">
+      <ListTransition>
+        <v-col cols="12" sm="4" md="3" v-for="list in data" :key="list.id">
+          <TodoList :list="list" @delete="onDelete" />
+        </v-col>
+      </ListTransition>
+    </v-row>
+    <v-row no-gutters v-else>
+      <v-alert border="start"> No todo lists found. Add a new one! </v-alert>
+    </v-row>
   </v-container>
 </template>
